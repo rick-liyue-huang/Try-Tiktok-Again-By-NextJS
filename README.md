@@ -13,4 +13,6 @@
 
 1. Confirm the project use SSR or not by add 'isSSR' state in '\_app.tsx'.
 2. Using 'react-google-login' library to deal with Google auth.
-3.
+3. Using the tailwindcss to beautify the whole project.
+
+You should use getServerSideProps only if you need to render a page whose data must be fetched at request time. This could be due to the nature of the data or properties of the request (such as authorization headers or geo location). Pages using getServerSideProps will be server side rendered at request time and only be cached if cache-control headers are configured.

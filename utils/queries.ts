@@ -1,3 +1,6 @@
+/**
+ * SANITY Language GROQ similar as graphql
+ */
 export const allPostsQuery = () => {
   const query = `*[_type == "post"] | order(_createdAt desc){
     _id,
