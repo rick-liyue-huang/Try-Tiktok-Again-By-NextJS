@@ -72,12 +72,12 @@ export const VideoCardComponent: React.FC<{ post: Video }> = ({ post }) => {
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
         >
-          <Link href={'/'}>
+          <Link href={`/detail/${post._id}`}>
             <video
               ref={videoRef}
               loop
               className={
-                'w-[200px] h-[300px] md:h-[400px] lg:w-[600px] lg:h-[500px] rounded-3xl cursor-pointer bg-gray-100'
+                'w-[200px] h-[300px] md:h-[400px] lg:w-[800px] lg:h-[500px] rounded-3xl cursor-pointer bg-gray-100'
               }
               src={post.video.asset.url}
             />

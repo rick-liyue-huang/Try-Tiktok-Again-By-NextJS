@@ -30,3 +30,7 @@ You should use getServerSideProps only if you need to render a page whose data m
 9. Keep the user login status by 'Zustand' application.
 
 #### How to upload the video
+
+1. Firstly, create document match with the document type in Sanity.
+2. Secondly, create the '/api/post' backend server to upload the post to Sanity.
+3. Thirdly, upload the video by the userProfile from 'useAuthStore'.

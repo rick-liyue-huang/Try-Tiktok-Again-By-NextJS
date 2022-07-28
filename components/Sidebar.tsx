@@ -35,11 +35,11 @@ export const SidebarComponent: React.FC = () => {
                 <p className={'text-2xl'}>
                   <AiFillHome />
                 </p>
-                <span className={'text-xl hidden xl:block'}>For Yout</span>
+                <span className={'text-xl hidden xl:block'}>For You</span>
               </div>
             </Link>
           </div>
-          {!userProfile && (
+          {/*{!userProfile && (
             <div className={'px-2 py-4 hidden xl:block'}>
               <p className={'text-gray-300'}>Login to follow videos</p>
               <div className={'pr-4'}>
@@ -62,7 +62,7 @@ export const SidebarComponent: React.FC = () => {
                 />
               </div>
             </div>
-          )}
+          )}*/}
           <DiscoverComponent />
           <SuggestedAccountsComponent />
           <FooterComponent />
