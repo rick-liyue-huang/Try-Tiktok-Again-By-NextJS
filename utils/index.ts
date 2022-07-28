@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode';
  * @define create the user with the invalid email or get the user by email
  * will be used in 'onSuccess' property of GoogleLogin
  */
-export const createOrGetUser = async (response: any) => {
+export const createOrGetUser = async (response: any, addUser: any) => {
   // console.log(response.credential); // this is jwt
 
   const decoded: { name: string; picture: string; sub: string } = jwt_decode(
@@ -21,6 +21,8 @@ export const createOrGetUser = async (response: any) => {
     userName: name,
     image: picture,
   };
+
+  addUser(user);
 
   await axios.post(`http://localhost:3000/api/auth`, user);
 };

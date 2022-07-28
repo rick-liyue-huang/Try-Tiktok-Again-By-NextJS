@@ -28,3 +28,5 @@ You should use getServerSideProps only if you need to render a page whose data m
 7. Post method to sanity by clicking `http://localhost:3000/api/auth`.
 8. create the post method in api/auth directory.
 9. Keep the user login status by 'Zustand' application.
+
+#### How to upload the video

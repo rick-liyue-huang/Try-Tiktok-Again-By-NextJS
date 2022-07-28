@@ -4,15 +4,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 // import { GoogleLogin, GoogleLogout } from 'react-google-login'; // replace by '@react-oauth/google'
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
-import { AiOutlineLogout } from 'react-icons/ai';
+import { MdOutlineLogout } from 'react-icons/md';
 import { BiSearch } from 'react-icons/bi';
 import { IoMdAdd } from 'react-icons/io';
 import Logo from '../utils/tiktik-logo.png';
 import { createOrGetUser } from '../utils';
+import { useAuthStore } from '../store/authStore';
 
 export const NavbarComponent: React.FC = () => {
-  const user = false;
+  // apply the Zustand here
+  const { userProfile, addUser, removeUser } = useAuthStore();
 
+  // @ts-ignore
   return (
     <div
       className={
@@ -32,11 +35,47 @@ export const NavbarComponent: React.FC = () => {
 
       <div>SEARCH</div>
       <div>
-        {user ? (
-          <div>Login Already</div>
+        {userProfile ? (
+          <div className={'flex gap-5 md:gap-10'}>
+            <Link href={'/upload'}>
+              <button
+                className={
+                  'border-2 px-2 md:px-4 text-md font-semibold flex items-center'
+                }
+              >
+                <IoMdAdd className={'text-xl'} />{' '}
+                <span className={'hidden md:block'}>Upload</span>
+              </button>
+            </Link>
+            {/*@ts-ignore*/}
+            {userProfile.image && (
+              <Link href={'/'}>
+                <>
+                  <Image
+                    width={40}
+                    height={40}
+                    className={'rounded-full cursor-pointer'}
+                    // @ts-ignore
+                    src={userProfile.image}
+                    alt={'profile photo'}
+                  />
+                </>
+              </Link>
+            )}
+            <button
+              type={'button'}
+              className={'px-2'}
+              onClick={() => {
+                googleLogout();
+                removeUser();
+              }}
+            >
+              <MdOutlineLogout color={'#F51997'} fontSize={30} />
+            </button>
+          </div>
         ) : (
           <GoogleLogin
-            onSuccess={(response) => createOrGetUser(response)}
+            onSuccess={(response) => createOrGetUser(response, addUser)}
             onError={() => console.log('error')}
           />
         )}
