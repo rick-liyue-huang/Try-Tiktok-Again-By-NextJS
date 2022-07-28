@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FormEvent } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -9,6 +9,10 @@ import { BsFillPlayBtnFill } from 'react-icons/bs';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import axios from 'axios';
 import { Video } from '../../type';
+import { useAuthStore } from '../../store/authStore';
+import { LikeButtonComponent } from '../../components/LikeButton';
+import { CommentsComponent } from '../../components/Comments';
+import { NEXT_PUBLIC_BASE_URL } from '../index';
 
 export interface IPropsType {
   postDetails: Video;
@@ -19,7 +23,10 @@ const DetailPage: NextPage<IPropsType> = ({ postDetails }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const [comment, setComment] = useState('');
+  const [isPostingComment, setIsPostingComment] = useState(false);
   const router = useRouter();
+  const { userProfile }: any = useAuthStore();
 
   const handleVideoClick = () => {
     if (playing) {
@@ -28,6 +35,37 @@ const DetailPage: NextPage<IPropsType> = ({ postDetails }) => {
     } else {
       videoRef?.current?.play();
       setPlaying(true);
+    }
+  };
+
+  const handleAddComment = async (e: any) => {
+    e.preventDefault();
+    if (userProfile && comment) {
+      setIsPostingComment(true);
+
+      const { data } = await axios.put(
+        `${NEXT_PUBLIC_BASE_URL}/api/post/${post._id}`,
+        {
+          userId: userProfile._id,
+          comment,
+        }
+      );
+
+      setPost({ ...post, comments: data.comments });
+      setComment('');
+      setIsPostingComment(false);
+    }
+  };
+
+  const handleLike = async (like: boolean) => {
+    if (userProfile) {
+      const { data } = await axios.put(`${NEXT_PUBLIC_BASE_URL}/api/like`, {
+        userId: userProfile._id,
+        postId: post._id,
+        like,
+      });
+
+      setPost({ ...post, likes: data.likes });
     }
   };
 
@@ -94,6 +132,67 @@ const DetailPage: NextPage<IPropsType> = ({ postDetails }) => {
           )}
         </div>
       </div>
+
+      <div className={'relative w-[1000px] md:w-[900px] lg:w-[700px]'}>
+        <div className={'lg:mt-20 mt-10'}>
+          <div
+            className={'flex gap-3 p-2 cursor-pointer font-semibold rounded'}
+          >
+            <div className={'md:w-20 md:h-20 w-16 h-16 ml-4'}>
+              <Link href={'/'}>
+                <>
+                  <Image
+                    width={62}
+                    height={62}
+                    className={'rounded-full'}
+                    src={post.postedBy.image}
+                    alt={'profile photo'}
+                    layout={'responsive'}
+                  />
+                </>
+              </Link>
+            </div>
+            <div>
+              <Link href={'/'}>
+                <div className={'flex flex-col gap-2 mt-3'}>
+                  <p
+                    className={
+                      'flex gap-2 items-center md:text-md font-bold text-primary'
+                    }
+                  >
+                    {post.postedBy.userName}{' '}
+                    <GoVerified className={'text-[#F51997]'} />
+                  </p>
+                  <p
+                    className={'capitalize font-medium text-gray-500 md:block'}
+                  >
+                    {post.postedBy.userName}
+                  </p>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          <p className={'px-10 text-lg text-gray-600'}>{post.caption}</p>
+          <div className={'mt-10 px-10'}>
+            {userProfile && (
+              <LikeButtonComponent
+                likes={post.likes}
+                handleLike={() => handleLike(true)}
+                handleDislike={() => handleLike(false)}
+              />
+            )}
+          </div>
+          <CommentsComponent
+            comment={comment}
+            setComment={setComment}
+            // @ts-ignore
+            comments={post.comments}
+            handleAddComment={handleAddComment}
+            isPostingComment={isPostingComment}
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -103,9 +202,7 @@ export const getServerSideProps = async ({
 }: {
   params: { id: string };
 }) => {
-  const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${id}`
-  );
+  const { data } = await axios.get(`${NEXT_PUBLIC_BASE_URL}/api/post/${id}`);
 
   return {
     props: {

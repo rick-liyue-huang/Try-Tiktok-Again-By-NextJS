@@ -4,6 +4,7 @@ import { Video } from '../type';
 import { VideoCardComponent } from '../components/VideoCard';
 import NoWorkResultComponent from '../components/NoWorkResult';
 
+export const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export interface IIndexProps {
   videos: Video[];
 }
@@ -27,9 +28,7 @@ const Home: NextPage<IIndexProps> = ({ videos }) => {
  * @define I will fetch videos by request, so use 'getServerSideProps', and will connect with api/post as server
  */
 export const getServerSideProps = async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post`
-  );
+  const response = await axios.get(`${NEXT_PUBLIC_BASE_URL}/api/post`);
 
   return {
     props: {

@@ -1,6 +1,3 @@
-/**
- * @define create User document in sanity, similar as mongoDB
- */
 export default {
   name: 'user',
   title: 'User',
@@ -8,7 +5,7 @@ export default {
   fields: [
     {
       name: 'userName',
-      title: 'User Name',
+      title: 'UserName',
       type: 'string',
     },
     {

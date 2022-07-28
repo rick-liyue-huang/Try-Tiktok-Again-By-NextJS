@@ -3,10 +3,8 @@ import createSchema from 'part:@sanity/base/schema-creator';
 
 // Then import schema types from any plugins that might expose them
 import schemaTypes from 'all:part:@sanity/base/schema-type';
-
-// the root schema for the external ones
-import post from './post';
 import user from './user';
+import post from './post';
 import comment from './comment';
 import postedBy from './postedBy';
 
@@ -19,8 +17,8 @@ export default createSchema({
   types: schemaTypes.concat([
     /* Your types here! */
     post,
+    postedBy,
     user,
     comment,
-    postedBy,
   ]),
 });

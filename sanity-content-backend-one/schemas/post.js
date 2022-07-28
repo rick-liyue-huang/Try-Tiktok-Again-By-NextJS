@@ -1,6 +1,3 @@
-/**
- * @define create the Post (video) document in sanity
- */
 export default {
   name: 'post',
   title: 'Post',

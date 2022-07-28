@@ -1,6 +1,3 @@
-/**
- * @define create Comment Document in sanity similar as mongoDB
- */
 export default {
   name: 'comment',
   title: 'Comment',
@@ -8,8 +5,8 @@ export default {
   fields: [
     {
       name: 'postedBy',
-      title: 'Posted By',
-      type: 'postedBy', // ref to postedBy.js document
+      title: 'PostedBy',
+      type: 'postedBy',
     },
     {
       name: 'comment',

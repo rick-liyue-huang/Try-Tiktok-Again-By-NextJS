@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { GoogleLogin } from 'react-google-login';
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
-import { DiscoverComponent } from './Doscover';
+import { DiscoverComponent } from './Discover';
 import { SuggestedAccountsComponent } from './SuggestedAccounts';
 import { FooterComponent } from './Footer';
 

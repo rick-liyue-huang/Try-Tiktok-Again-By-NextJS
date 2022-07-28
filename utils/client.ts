@@ -4,7 +4,7 @@ import sanityClient from '@sanity/client';
  * @define create the sanity project configuration, and also add http://localhost:300 on CORS config
  */
 export const client = sanityClient({
-  projectId: 'gjfcdk89', // get it from sanity online page
+  projectId: 'zdzbwgl5', // get it from sanity online page
   dataset: 'production',
   apiVersion: '2022-07-23',
   useCdn: false, // fetch new videos each time we reload the page

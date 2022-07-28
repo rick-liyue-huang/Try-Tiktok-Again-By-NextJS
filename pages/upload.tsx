@@ -8,6 +8,7 @@ import { useAuthStore } from '../store/authStore';
 import { client } from '../utils/client';
 import { SanityAssetDocument } from '@sanity/client';
 import { topics } from '../utils/constants';
+import { NEXT_PUBLIC_BASE_URL } from './index';
 
 const UploadPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,10 +68,7 @@ const UploadPage: NextPage = () => {
       };
 
       // create the respective api route
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post`,
-        document
-      );
+      await axios.post(`${NEXT_PUBLIC_BASE_URL}/api/post`, document);
 
       router.push('/');
     }
