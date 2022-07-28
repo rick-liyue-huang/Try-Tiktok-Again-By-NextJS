@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { useState, useEffect } from 'react';
 import { NavbarComponent } from '../components/Navbar';
 import { SidebarComponent } from '../components/Sidebar';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function MyApp({ Component, pageProps }: AppProps) {
   // confirm the ssr or not from root
@@ -17,7 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <div>
+    <GoogleOAuthProvider
+      clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
+    >
       {/* can also use layout */}
       <NavbarComponent />
       <div className={'flex gap-6 md:gap-20'}>
@@ -32,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </div>
       </div>
-    </div>
+    </GoogleOAuthProvider>
   );
 }
 

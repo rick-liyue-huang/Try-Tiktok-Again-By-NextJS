@@ -2,13 +2,17 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+// import { GoogleLogin, GoogleLogout } from 'react-google-login'; // replace by '@react-oauth/google'
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
 import { IoMdAdd } from 'react-icons/io';
 import Logo from '../utils/tiktik-logo.png';
+import { createOrGetUser } from '../utils';
 
 export const NavbarComponent: React.FC = () => {
+  const user = false;
+
   return (
     <div
       className={
@@ -25,6 +29,18 @@ export const NavbarComponent: React.FC = () => {
           />
         </div>
       </Link>
+
+      <div>SEARCH</div>
+      <div>
+        {user ? (
+          <div>Login Already</div>
+        ) : (
+          <GoogleLogin
+            onSuccess={(response) => createOrGetUser(response)}
+            onError={() => console.log('error')}
+          />
+        )}
+      </div>
     </div>
   );
 };

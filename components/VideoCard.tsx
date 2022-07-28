@@ -85,7 +85,7 @@ export const VideoCardComponent: React.FC<{ post: Video }> = ({ post }) => {
           {isHover && (
             <div
               className={
-                'absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 bg-red-50 flex gap-10 lg:justify-between'
+                'absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 bg-pink-300 flex gap-10  lg:w-[600px] lg:justify-around w-[100px] md:w-[50px] p-3'
               }
             >
               {playing ? (

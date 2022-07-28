@@ -16,3 +16,15 @@
 3. Using the tailwindcss to beautify the whole project.
 
 You should use getServerSideProps only if you need to render a page whose data must be fetched at request time. This could be due to the nature of the data or properties of the request (such as authorization headers or geo location). Pages using getServerSideProps will be server side rendered at request time and only be cached if cache-control headers are configured.
+
+#### Deal with Google OAuth
+
+1. Install the new library for react google oauth api by `yarn add @react-oauth/google jwt-decode`, and then add `<GoogleOAuthProvider client="">` on '\_app.tsx'.
+2. Create new project in cloud.Google, and the api key in 'Credentials' and 'Consent screen'.
+3. Get the 'NEXT_PUBLIC_GOOGLE_CLIENT_ID' from the Credential after setting Consent screen content, and attach it on 'client' property.
+4. Create method 'createOrGetUser' and get the jwt token from 'response.credential', which will be used in getting user info.
+5. Inside 'createOrGetUser' method, I use jwt-decode to get decoded information.
+6. Modify the decoded to user info matching with Sanity User document type.
+7. Post method to sanity by clicking `http://localhost:3000/api/auth`.
+8. create the post method in api/auth directory.
+9. Keep the user login status by 'Zustand' application.
