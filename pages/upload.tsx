@@ -67,7 +67,10 @@ const UploadPage: NextPage = () => {
       };
 
       // create the respective api route
-      await axios.post('http://localhost:3000/api/post', document);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post`,
+        document
+      );
 
       router.push('/');
     }

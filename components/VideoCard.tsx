@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Video } from '../type';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,7 +15,7 @@ import { set } from 'husky';
 export const VideoCardComponent: React.FC<{ post: Video }> = ({ post }) => {
   const [isHover, setIsHover] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [isVideoMutated, setIsVideoMutated] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleVideoPress = () => {
@@ -27,6 +27,12 @@ export const VideoCardComponent: React.FC<{ post: Video }> = ({ post }) => {
       setPlaying(true);
     }
   };
+
+  useEffect(() => {
+    if (videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [isVideoMuted]);
 
   return (
     <div className={'flex flex-col border-b-2 border-gray-200 pb-6'}>
@@ -101,12 +107,12 @@ export const VideoCardComponent: React.FC<{ post: Video }> = ({ post }) => {
                   />
                 </button>
               )}
-              {isVideoMutated ? (
-                <button onClick={() => setIsVideoMutated(false)}>
+              {isVideoMuted ? (
+                <button onClick={() => setIsVideoMuted(false)}>
                   <HiVolumeOff className={'text-black text-2xl lg:text-4xl'} />
                 </button>
               ) : (
-                <button onClick={() => setIsVideoMutated(true)}>
+                <button onClick={() => setIsVideoMuted(true)}>
                   <HiVolumeUp className={'text-black text-2xl lg:text-4xl'} />
                 </button>
               )}

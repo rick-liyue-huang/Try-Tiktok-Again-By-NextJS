@@ -27,7 +27,9 @@ const Home: NextPage<IIndexProps> = ({ videos }) => {
  * @define I will fetch videos by request, so use 'getServerSideProps', and will connect with api/post as server
  */
 export const getServerSideProps = async () => {
-  const response = await axios.get(`http://localhost:3000/api/post`);
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post`
+  );
 
   return {
     props: {
