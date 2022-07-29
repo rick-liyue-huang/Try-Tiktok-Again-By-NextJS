@@ -7,7 +7,7 @@ import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import { MdOutlineLogout } from 'react-icons/md';
 import { BiSearch } from 'react-icons/bi';
 import { IoMdAdd } from 'react-icons/io';
-import Logo from '../utils/tiktik-logo.png';
+import Logo from '../utils/singlelogo.webp';
 import { createOrGetUser } from '../utils';
 import { useAuthStore } from '../store/authStore';
 
@@ -35,7 +35,7 @@ export const NavbarComponent: React.FC = () => {
       }
     >
       <Link href={'/'}>
-        <div className={'w-[100px] md:w-[130px]'}>
+        <div className={'w-[100px] h-[100px] md:w-[130px]'}>
           <Image
             className={'cursor-pointer'}
             src={Logo}
