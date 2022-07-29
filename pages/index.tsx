@@ -27,8 +27,17 @@ const Home: NextPage<IIndexProps> = ({ videos }) => {
 /**
  * @define I will fetch videos by request, so use 'getServerSideProps', and will connect with api/post as server
  */
-export const getServerSideProps = async () => {
-  const response = await axios.get(`${NEXT_PUBLIC_BASE_URL}/api/post`);
+export const getServerSideProps = async ({
+  query: { topic },
+}: {
+  query: { topic: string };
+}) => {
+  let response = null;
+  if (topic) {
+    response = await axios.get(`${NEXT_PUBLIC_BASE_URL}/api/discover/${topic}`);
+  } else {
+    response = await axios.get(`${NEXT_PUBLIC_BASE_URL}/api/post`);
+  }
 
   return {
     props: {
