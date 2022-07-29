@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
 import { useAuthStore } from '../store/authStore';
 import NoWorkResultComponent from './NoWorkResult';
+import { IUser } from '../type';
 
 interface ICommentProp {
   comment: string;
@@ -30,7 +31,7 @@ export const CommentsComponent: React.FC<IProps> = ({
   comments,
 }) => {
   // const comments = [];
-  const { userProfile }: any = useAuthStore();
+  const { userProfile, allUsers } = useAuthStore();
   // const isPostingComment = false;
 
   return (
@@ -41,7 +42,52 @@ export const CommentsComponent: React.FC<IProps> = ({
     >
       <div className={'overflow-scroll lg:h-[475px]'}>
         {comments?.length ? (
-          <div>videos</div>
+          <div>
+            {comments.map((comment, ids) => (
+              <div key={ids}>
+                {allUsers.map(
+                  (user: IUser) =>
+                    user._id ===
+                      (comment.postedBy._id || comment.postedBy._ref) && (
+                      <div className={'p-2 items-center'} key={user._id}>
+                        <Link href={`/profile/${user._id}`}>
+                          <div
+                            className={'flex items-start gap-3 cursor-pointer'}
+                          >
+                            <div className={'w-8 h-8'}>
+                              <Image
+                                src={user.image}
+                                width={34}
+                                height={34}
+                                className={'rounded-full'}
+                                alt={'user profile'}
+                                layout={'responsive'}
+                              />
+                            </div>
+                            <div className={'hidden xl:block'}>
+                              <p
+                                className={
+                                  'flex gap-1 items-center text-md font-bold text-primary lowercase'
+                                }
+                              >
+                                {user.userName.replace(' ', '')}
+                                <GoVerified className={'text-pink-600'} />
+                              </p>
+                              <p className={'capitalize text-gray-400 text-sm'}>
+                                {user.userName}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                        <div>
+                          <p>{comment.comment}</p>
+                        </div>
+                      </div>
+                    )
+                )}
+              </div>
+            ))}
+          </div>
         ) : (
           <NoWorkResultComponent text={'no comments yet'} />
         )}
